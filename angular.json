@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ToyStore": {
+    "toy-store": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ToyStore",
+            "outputPath": "dist/toy-store",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -79,10 +79,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "ToyStore:build:production"
+              "browserTarget": "toy-store:build:production"
             },
             "development": {
-              "browserTarget": "ToyStore:build:development"
+              "browserTarget": "toy-store:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ToyStore:build"
+            "browserTarget": "toy-store:build"
           }
         },
         "test": {
@@ -114,5 +114,5 @@
       }
     }
   },
-  "defaultProject": "ToyStore"
+  "defaultProject": "toy-store"
 }
