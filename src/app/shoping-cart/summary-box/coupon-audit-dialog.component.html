@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+      <ng-container *ngIf="isSuccess == 'SUCCESS'">
+          <div class="col-3">
+            <mat-icon style="font-size: 50px; color: green;">check_circle</mat-icon>
+          </div>
+          <div class="col-9">
+            <h1 style="padding-top:9px">Xác nhận mã giảm giá</h1>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="isSuccess == 'FAIL'">
+        <div class="col-2"><mat-icon style="font-size: 50px; color: rgb(251, 0, 42);">cancel</mat-icon></div>
+        <div class="col-10">
+          <h2 style="padding-top:13px">Không tồn tại mã giảm giá này</h2>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isSuccess == 'APPLIED'">
+        <div class="col-3">
+          <mat-icon style="font-size: 50px; color: green;">check_circle</mat-icon>
+        </div>
+        <div class="col-9">
+          <h2 style="padding-top:9px">Đã áp dụng mã giảm giá này</h2>
+        </div>
+      </ng-container>
+  </div>
+</div>

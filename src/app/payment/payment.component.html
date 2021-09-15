@@ -1,0 +1,150 @@
+<app-title-box [title]="title" [titleBoxImage]="backgroundImage"> </app-title-box>
+<div class="container" style="padding-top: 20px;">
+  <div class="row">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-1">
+              <mat-icon>home</mat-icon>
+            </div>
+            <div class="col-11">
+              <h2>Địa chỉ nhận hàng</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-accordion>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <b>Địa chỉ</b>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Thông tin và địa chỉ của bạn
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div><b>Họ tên:</b> {{user.fullName}}</div>
+                  <div><b>Email:</b> {{user.email}}</div>
+                  <div><b>Số điện thoại (+84):</b> {{user.phoneNumber}}</div>
+                  <div><b>Địa chỉ nhận hàng:</b> {{user.address}}</div>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <div></div>
+            </div>
+          </div>
+          <div class="row padding-20" >
+            <div class="col-4">
+              <button mat-raised-button class="btn-color" (click)="openAddressEditDialog()">Địa chỉ mới</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">
+          <mat-icon>credit_card</mat-icon>
+        </div>
+        <div class="col-11">
+          <h2>Phương thức thanh toán</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="sltPaymentMethod">
+            <ng-container *ngFor="let paymentMethod of paymentMethods">
+                <mat-radio-button class="example-radio-button" [value]="paymentMethod[1]">
+                  <h4>{{paymentMethod[0]}}</h4>
+                </mat-radio-button>
+            </ng-container>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-1">
+          <mat-icon>collections</mat-icon>
+        </div>
+        <div class="col-11">
+          <h2>Thông tin đơn hàng</h2>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>{{pendingOrderItems.length}} sản phẩm trong giỏ hàng</b>
+              </mat-panel-title>
+              <mat-panel-description>
+              Chi tiết đơn hàng của bạn
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="contain">
+              <div class="row">
+                <div class="col-3 text-align-center"><b>Ảnh</b></div>
+                <div class="col-4 text-align-center"><b>Tên</b></div>
+                <div class="col-1 text-align-center"><b>SL</b></div>
+                <div class="col-3 text-align-center"><b>Giá</b></div>
+                <div class="col-1 text-align-center"><b>Xoá</b></div>
+              </div>
+              <ng-container *ngFor="let pendingOrderItem of pendingOrderItems">
+                <div class="row">
+                  <div class="col-3 text-align-center">
+                    <img style="width: 100px;" src="../../assets//image//product-image/{{pendingOrderItem.product.thumbnail.url}}" />
+                  </div>
+                  <div class="col-4">{{pendingOrderItem.product.name}}</div>
+                  <div class="col-1 text-align-center">{{pendingOrderItem.quantity}}</div>
+                  <div class="col-3 text-align-center">{{pendingOrderItem.totalPrice | currency: "VND"}}</div>
+                  <div class="col-1 text-align-center" style="cursor: pointer;"(click)=deletePendingOrder(pendingOrderItem)><mat-icon>delete</mat-icon></div>
+                </div>
+              </ng-container>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div class="row">
+          <div class="col-12">
+            <div class="row padding-20">
+              <div class="col-1">
+                <mat-icon>monetization_on</mat-icon>
+              </div>
+              <div class="col-11">
+                <h2>Thành tiền: </h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <h4>Tổng phụ </h4>
+              </div>
+              <div class="col-8">
+                <h3 style="text-align:right">{{summaryCart.subTotal | currency:"VND"}}</h3>
+              </div>
+
+              <div class="col-4">
+                <h4>Mã giảm giá </h4>
+              </div>
+              <div class="col-8">
+                <h3 style="text-align:right">{{summaryCart.couponValue}}%</h3>
+              </div>
+
+              <div class="col-4">
+                <h2 style="color:crimson">Tổng tiền: </h2>
+              </div>
+              <div class="col-8">
+                <h1 style="text-align:right; color:crimson">{{summaryCart.totalPayment | currency:"VND"}}</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button style="width: 100%" mat-raised-button class="btn-color" (click)=payment()>Thanh toán</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,93 @@
+<div class="container-fluid" style="height: 72px;">
+    <form action="">
+        <div class="form-inlinee">
+            <div class="text" style="left: 0px;">
+                <a href="/" style="margin-right: 20px;"><img src="assets/img/logoCTS.jpg" alt="logoCTS" style="width:100%; "></a>
+            </div>
+
+            <div class="icon" style="left: 357px; top: 20px;">
+                <div class="form-inline">
+
+                    <!-- <div class="search">
+                        <input type="text" class="form-control input-sm" maxlength="64" placeholder="  Tìm kiếm..."
+                        [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}" />
+                        <button type="button" style="background-color: black;" class="btn"><i style="margin-top: 8px;" class="fas fa-search"
+                         (click)="clickSearch()" ></i></button>
+                    </div> -->
+
+                    <div class="cart">
+                        <div class="cart-center">
+                            <mat-icon  [routerLink] = "['/shopping-cart']" [matBadge]="pendingOrderLength" matBadgeColor="warn"><i class="fas fa-shopping-cart"></i></mat-icon>
+                        </div>
+                    </div>
+                    <div class="email">
+                        <div class="email-center">
+                           <a href=""> <i class="fas fa-envelope-open-text"></i></a>
+                        </div>
+                    </div>
+                    <div class="account">
+                        <div class="account-center">
+                            <a class="row" [matMenuTriggerFor]="menu">
+                                <div class="col-1">
+                                  <a>
+                                    <i class="fas fa-user-circle"></i>
+                                  </a>
+                                </div>
+                                <ng-container *ngIf="logged; then thenBlock else elseBlock"></ng-container>
+                                  <ng-template #thenBlock>
+                                    <div class="col-6">
+                                      <span>Hi, {{fullName}}</span>
+                                     </div>
+                                  </ng-template>
+                                  <ng-template #elseBlock>
+                                    <div class="col-6">
+                                      <span>Tài khoản</span>
+                                     </div>
+                                </ng-template>
+                            </a>
+                            <mat-menu #menu="matMenu">
+                              <ng-container *ngIf="logged; then trueBlock else falseBlock"></ng-container>
+                                  <ng-template #trueBlock>
+                                    <button mat-menu-item [routerLink]="['/customer/account']">
+                                      <mat-icon>account_circle</mat-icon>
+                                      <span>Tài khoản</span>
+                                    </button>
+                                    <button mat-menu-item (click)="logout()">
+                                      <mat-icon>exit_to_app</mat-icon>
+                                      <span>Đăng xuất</span>
+                                    </button>
+                                  </ng-template>
+                                  <ng-template #falseBlock>
+                                    <button mat-menu-item [routerLink]="['/login']">
+                                      <mat-icon>person</mat-icon>
+                                      <span>Đăng nhập</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                      <mat-icon>create</mat-icon>
+                                      <span>Đăng kí</span>
+                                    </button>
+                                </ng-template>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid nav-custom ">
+            <ul class="nav navbar effect">
+                <li><a [routerLink]="['/products']" >SẢN PHẨM</a></li>
+                <li><a [routerLink]="['/products']">ĐỘ TUỔI</a></li>
+                <li><a [routerLink]="['/products']">GIỚI TÍNH</a></li>
+                <li><a [routerLink]="['/products/sale']"  >KHUYẾN MÃI</a></li>
+                <li><a [routerLink]="['/products/new']">HÀNG MỚI</a></li>
+                <li><a [routerLink]="['/member-cart']">THƯƠNG HIỆU</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+

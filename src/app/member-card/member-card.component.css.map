@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "member-card.component.scss"
+    ],
+    "names": [],
+    "file": "member-card.component.css"
+}

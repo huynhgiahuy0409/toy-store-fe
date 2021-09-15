@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+  <div class="col-12 col-sm-8 col-md-4 col-lg-4" *ngFor="let brand of (brandRes$ | async)">
+      <div class="our-team">
+      <div class="picture">
+          <img class="img-fluid" style="width: 300px; height: 150px;" src="./../../../assets/image/brand-image/{{brand.thumbnail.url}}">
+      </div>
+      <ul class="social">
+          <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
+      </ul>
+      </div>
+  </div>
+</div>
+

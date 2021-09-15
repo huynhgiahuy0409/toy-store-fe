@@ -1,0 +1,109 @@
+<div class="row padding-top-20">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-1">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="col-11">
+          <h3><b>Thông tin liên hệ</b></h3>
+        </div>
+      </div>
+      <ng-container *ngFor="let item of contactView">
+        <p><b>{{item[0]}}:</b> {{item[1]}}</p>
+      </ng-container>
+      <button mat-raised-button color="primary" class="crimson-color" (click)=updateContact()>Thay đổi thông tin</button>
+    </div>
+  </div>
+  <div class="row padding-top-20">
+    <div class="row">
+      <div class="col-1">
+        <mat-icon>location_on</mat-icon>
+      </div>
+      <div class="col-11">
+        <h3><b>Địa chỉ giao hàng</b></h3>
+      </div>
+    </div>
+    <div class="col-12">
+      <h4>Địa chỉ giao hàng mặc định</h4>
+      <p>{{deliveryAddress}}</p>
+      <button mat-raised-button color="primary" class="crimson-color" [routerLink]="['/customer/delivery-address/update']">Sửa địa chỉ</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 padding">
+      <button mat-raised-button color="primary" class="crimson-color" [routerLink]="['/customer/delivery-address/new']">Quản lí địa chỉ</button>
+    </div>
+  </div>
+  <div class="row padding-top-20">
+    <div class="row">
+      <div class="col-1">
+        <mat-icon> list_alt</mat-icon>
+      </div>
+      <div class="col-11">
+        <h3><b>Đơn hàng gần đây</b></h3>
+      </div>
+    </div>
+    <div class="col-12">
+      <table mat-table [dataSource]="recentOrdersDataSource" class="mat-elevation-z8" style="width: 100%;">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Mã đơn hàng </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Ngày </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.createdDate}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="orderBy">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Gửi đến </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.user.fullName}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="totalPayment">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Thành tiền </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.totalPayment | currency:"VND"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Tình trạng </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.order.payment.status == '1' "  class="text-center">
+              Đã thanh toán
+            </div>
+            <div *ngIf="element.order.payment.status == '0' "  class="text-center">
+              Chưa thanh toán
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Thao tác </th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+              <div class="row justify-content-center">
+                <div class="col-4">
+                  <button mat-raised-button>{{element.action[0]}}</button>
+                </div>
+                <div class="col-4">
+                  <button mat-raised-button color="warn">{{element.action[1]}}</button>
+                </div>
+              </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="orderDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: orderDisplayedColumns;"></tr>
+      </table>
+
+    </div>
+  </div>
+</div>

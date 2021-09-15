@@ -1,0 +1,59 @@
+<app-title-box [title]="title" [titleBoxImage]="backgroundImage"> </app-title-box>
+<div class="cart-box-main">
+  <div class="container" style="max-width: 1400px;">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="table-main table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr class="row" style="margin-left: -1px;">
+                            <th class="col-2">Ảnh</th>
+                            <th class="col-2">Tên sản phẩm</th>
+                            <th class="col-2">Đơn giá</th>
+                            <th class="col-1">Khuyến mãi</th>
+                            <th class="col-2">Sổ lượng</th>
+                            <th class="col-2">Tổng cộng</th>
+                            <th class="col-1">Xóa</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="(pendingOrders$ | async) as pendingOrders">
+                          <tr *ngFor="let pendingOrder of pendingOrders" class="row" style="margin-left: -1px;">
+                            <th class="col-2">
+                              <a href="#">
+                                <img class="img-fluid" src="../../assets/image/product-image/{{pendingOrder.product.thumbnail.url}}" alt="" />
+                              </a>
+                            </th>
+                            <th class="col-2">
+                              <p style="white-space: normal;">{{pendingOrder?.product!.name}}</p>
+                            </th>
+                            <th class="col-2">
+                              <p>{{pendingOrder?.product!.priceUnit | currency: "VND"}}</p>
+                            </th>
+                            <th class="col-1">
+                              <p>{{pendingOrder?.product!.discountPercent}}%</p>
+                            </th>
+                            <th class="col-2 ">
+                              <div class="quantity-box">
+                                <input #quantiTyInPut type="number" maxlength="4" size="4" value="{{pendingOrder?.quantity}}" min="0" step="1" (change)="changeQuantity(pendingOrder, quantiTyInPut.value)">
+                              </div>
+                            </th>
+                            <th class="col-2">
+                              <p>{{pendingOrder?.totalPrice  | currency: "VND"}}</p>
+                            </th>
+                            <th class="col-1">
+                              <a [routerLink]="['/shopping-cart']" style="margin-left: 5px;" (click)=removePendingOrder(pendingOrder.product.id)>
+                                <i style="color: black" class="fas fa-times"></i>
+                              </a>
+                            </th>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      <app-summary-box
+      ></app-summary-box>
+  </div>
+</div>

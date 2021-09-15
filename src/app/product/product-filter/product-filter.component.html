@@ -1,0 +1,98 @@
+
+<!-- SIDEBAR -->
+<div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+          <div class="product-categori">
+            <div class="search-product">
+                    <input [(ngModel)]="searchValue" class="form-control" placeholder="Tìm kiếm ..." type="text">
+                    <ng-container *ngIf="searchValue">
+                      <button type="button" (click)="search()"> <i class="fa fa-search" ></i> </button>
+                    </ng-container>
+            </div>
+            <div class="filter-sidebar-left">
+                <div class="title-left">
+                    <h3>Danh mục</h3>
+                </div>
+                <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                    <div class="list-group-collapse sub-men">
+                    <a class="list-group-item list-group-item-action" [routerLink]="['/products']">Sản phẩm</a>
+                    <a class="list-group-item list-group-item-action" [routerLink]="['/sale-product']"  >Sản phẩm khuyến mãi</a>
+                    <a class="list-group-item list-group-item-action" [routerLink]="['/product-new']">Sản phẩm mới</a>
+                    <a class="list-group-item list-group-item-action" [routerLink]="['/member-cart']"  >Các trang thương hiệu</a>
+                        <!-- <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action active">T-Shirts <small class="text-muted">(50)</small></a>
+                                <a href="#" class="list-group-item list-group-item-action">Polo T-Shirts <small class="text-muted">(10)</small></a>
+                                <a href="#" class="list-group-item list-group-item-action">Round Neck T-Shirts <small class="text-muted">(10)</small></a>
+                                <a href="#" class="list-group-item list-group-item-action">V Neck T-Shirts <small class="text-muted">(10)</small></a>
+                                <a href="#" class="list-group-item list-group-item-action">Hooded T-Shirts <small class="text-muted">(20)</small></a>
+                            </div>
+                        </div> -->
+                    </div>
+            </div>
+            <div class="filter-price-left">
+                <div class="title-left">
+                    <h3>Giá</h3>
+                </div>
+                <div class="price-box-slider">
+                  <mat-slider
+                  thumbLabel
+                  [displayWith]="formatLabel"
+                  tickInterval="10"
+                  step="10000"
+                  min="0"
+                  max="2000000"
+                  (change) = "priceRangeChange($event)"
+                  ></mat-slider>
+                </div>
+            </div>
+
+            <div  class="filter-brand-left">
+                <div class="title-left">
+                    <h3>Độ tuổi</h3>
+                </div>
+                <section class="example-section" >
+                  <p *ngFor="let age of (ages$ | async)">
+                      <ng-container [formGroup]="ageSelectFG">
+                      <mat-checkbox [formControlName]="age.id">{{age.name}}</mat-checkbox>
+                    </ng-container>
+                  </p>
+                </section>
+            </div>
+            <div class="filter-brand-left">
+                <div class="title-left">
+                    <h3>Giới tính</h3>
+                </div>
+                  <mat-radio-group
+                  aria-labelledby="example-radio-group-label"
+                  class="example-radio-group"
+                 >
+                  <mat-radio-button style="margin-left: -3px" [value]="useObject.id"
+                                    class="example-radio-button"
+                                    *ngFor="let useObject of (useObjects$ | async)"
+                                    (change) = "genderChange($event)">
+                  {{useObject.name}}
+                  </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="filter-brand-left">
+                <div class="title-left">
+                    <h3>Thương hiệu</h3>
+                </div>
+                <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+               >
+                <mat-radio-button style="margin-left: -3px" [value]="brand.id"
+                                  class="example-radio-button"
+                                  *ngFor="let brand of (brands$ | async)"
+                                  (change) = "brandChange($event)">
+                {{brand.name}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <ul class="pagination" id="pagination"></ul>
+            </div>
+          </div>
+</div>

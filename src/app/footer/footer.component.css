@@ -1,0 +1,27 @@
+footer {
+  margin-top: 20px;
+  height: 100%;
+  font-size: 20px;
+}
+
+footer .p-4 {
+  background-color: #413b37;
+}
+
+footer .button-size {
+  height: 30px;
+}
+
+footer a {
+  text-decoration: none;
+  font-weight: 200px;
+}
+
+footer .text-uppercase {
+  text-decoration: underline;
+}
+
+footer button::after {
+  content: "";
+}
+/*# sourceMappingURL=footer.component.css.map */

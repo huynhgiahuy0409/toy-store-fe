@@ -1,0 +1,83 @@
+<!-- LIST ITEM -->
+<div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+  <div class="right-product-box" style="margin-top: 10px">
+    <div class="product-item-filter row">
+        <div class="col-12 col-sm-12 text-center text-sm-left">
+            <div class="toolbar-sorter-right">
+              <mat-form-field appearance="fill" style=" width: 600px;font-size: 14px;">
+                <mat-label>--Sắp xếp theo--</mat-label>
+                <mat-select (selectionChange)="orderChange($event)">
+                  <mat-option>None</mat-option>
+                  <mat-option *ngFor="let order of orders" [value] = "order.value">{{order.viewValue}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <ng-container *ngIf="(pagination$ | async) as pagination">
+              <p style=" font-size: 15px;">Tổng cộng có {{pagination.totalLength}} sản phẩm</p>
+            </ng-container>
+        </div>
+   <!--      <button #hightToLow value="{priceToBuy,esc}" (click) = "getSaleProductsSorted(hightToLow)">High Price → Low Price> </button> -->
+    </div>
+
+    <div class="row product-categorie-box">
+        <div class="tab-content">
+                <div  iv class="row">
+                  <ng-container *ngIf="(allProductItem$ | async) as allProductItem">
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4" *ngFor="let product of allProductItem.items">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                            <div *ngIf="page=='sale'">
+                              <div class="type-lb">
+                                <p class="sale">Sale {{product.discountPercent}}%</p>
+                              </div>
+                            </div>
+                            <div *ngIf="page=='new'">
+                              <div class="type-lb">
+                                <p class="sale">New</p>
+                              </div>
+                            </div>
+                            <div *ngIf="!page">
+                              <ng-container *ngIf="(product.discountPercent) as discountPercent">
+                                <div *ngIf="discountPercent > 0 ">
+                                  <div class="type-lb">
+                                    <p class="sale">Sale {{discountPercent}}%</p>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                                <a [routerLink]="['/product-detail',product.id]">
+                                  <img src="./../../../assets/image/product-image/{{product.thumbnail.url}}" class="img-fluid" alt="Image">
+                                </a>
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li><a [routerLink]="['/product-detail',product.id]" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                        <li><a  data-toggle="tooltip" data-placement="right" title="Add to Wishlist" (click)="addToWishList(product.id)"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                    <a class="cart" (click)="addToCart(product)">Add to Cart</a>
+
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <a [routerLink]="['/product-detail',product.id]">
+                                  <h4 >{{product.name}}</h4>
+                                </a>
+                                <h5>SKU: {{product.sku}}</h5>
+                                <div class="price-box">
+                                    <span class="priceToBuy">{{product.priceToBuy | currency: "VND"}} </span>
+                                    <span class="basePrice">{{product.priceUnit | currency: "VND"}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </ng-container>
+                </div>
+        </div>
+    </div>
+
+  </div>
+  <ng-container *ngIf="(pagination$ | async) as pagination">
+    <app-paginator [length]="pagination.totalLength" [pageSize]="pagination.pageItems"
+      (pageEvent)="handlePageChange($event)"></app-paginator>
+  </ng-container>
+</div>
+<!-- PAGING -->

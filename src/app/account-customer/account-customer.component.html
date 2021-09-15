@@ -1,0 +1,20 @@
+<app-title-box [title]="titleBoxInf.title" [titleBoxImage]="titleBoxInf.titleBoxImage"></app-title-box>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <div class="row">
+        <div class="col-2" >
+          <mat-icon style="margin: 23px -4px;">account_circle</mat-icon>
+        </div>
+        <div class="col-10">
+          <div class ="account-nav-title" style="margin-left: -40px;">Tài khoản của bạn</div>
+        </div>
+      </div>
+      <div class="row account-nav" *ngFor="let item of yourAccountList">
+        <span [routerLink]="['/customer/' + item[1] ]" routerLinkActive="back-ground-color-active">{{item[0]}}</span>
+      </div>
+    </div>
+    <div class="col-8">
+      <router-outlet></router-outlet>
+    </div>
+</div>

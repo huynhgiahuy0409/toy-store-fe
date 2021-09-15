@@ -1,0 +1,53 @@
+<div class="container" style="padding-top:20px">
+  <div class="row">
+    <div class="col-1">
+      <mat-icon>list</mat-icon>
+    </div>
+    <div class="col-11">
+      <h3><b>Danh sách sản phẩm yêu thích</b></h3>
+    </div>
+  </div>
+
+  <div *ngIf="favoriteProducts">
+    <div class="row">
+      <ng-container *ngFor="let favoriteProduct of favoriteProducts">
+        <div class="col-4">
+          <mat-card class="example-card">
+            <img mat-card-image src="../../../assets/image/product-image/{{favoriteProduct.product.thumbnail.url}}"
+              alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <div class="why-text">
+                <h4>
+                  {{favoriteProduct.product.name}}
+                </h4>
+                <h5>
+                  SKU: {{favoriteProduct.product.sku}}
+                </h5>
+                <div class="price-box">
+                  <span class="priceToBuy">
+                    {{favoriteProduct.product.priceToBuy | currency: "VND"}}
+                  </span>
+                  <span class="basePrice">
+                    {{favoriteProduct.product.priceUnit | currency: "VND"}}
+                  </span>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="row">
+                <div class="col-10">
+                  <button mat-raised-button style="width: 100%; background-color: crimson; color:white" (click)=addToCart(favoriteProduct.product)>Thêm vào giỏ hàng</button>
+                </div>
+                <div class="col-2" (click)="removeFavoriteProduct(favoriteProduct.id)">
+                  <mat-icon style="font-size: 35px;">delete</mat-icon>
+                </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </ng-container>
+      <mat-paginator [pageSizeOptions]="initPagination.pageSizeOptions" (page)="handleChangePage($event)" [pageSize]="initPagination.pageSize" [length]="initPagination.totalLength"></mat-paginator>
+    </div>
+  </div>
+
+</div>

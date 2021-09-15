@@ -1,0 +1,133 @@
+<div class="container">
+  <ng-container *ngIf="(product$ | async) as product">
+    <div class="row">
+      <div class="col-4">
+        <img src="../../../assets/image/product-image/{{product.thumbnail.url}}" style="width: 100%;">
+      </div>
+      <div class="col-8">
+
+        <div class="row">
+          <div class="col-12">
+            <h1 style="margin-top: 20px">{{product.name}}</h1>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <span class="font-size-14" style="margin-top: 20px">Thương hiệu: <span
+                  style="color: blue">{{product.brand.name}}</span></span>
+            </div>
+            <div class="col-4">
+              <span class="font-size-14" style="margin-top: 20px">SKU: <span
+                  style="color: blue">{{product.sku}}</span></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <span class="font-size-14" style="margin-top: 20px">Độ tuổi:
+                <ng-container *ngFor="let age of product.ages">
+                  <span>{{age.name}}  </span>
+                </ng-container>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <span class="font-size-14" style="margin-top: 20px">Đối tượng:
+                <ng-container *ngFor="let useObject of product.useObjects">
+                  <span>{{useObject.name}}  </span>
+                </ng-container>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <span class="font-size-14" style="margin-top: 20px">Giá bán: <span class="priceToBuy">{{product.priceToBuy
+                  | currency:"VND"}}</span></span>
+            </div>
+            <ng-container *ngIf="product.discountPercent > 0">
+              <div class="col-4">
+                <span class="font-size-14" style="margin-top: 20px">Giá gốc: <span class="priceUnit">{{product.priceUnit
+                    | currency:"VND"}}</span></span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title style="display: block;">
+                    <div class="row">
+                      <div class="col-2">
+                        <mat-icon>attach_money</mat-icon>
+                      </div>
+                      <div class="col-10">
+                        <h4 style="padding-top:4px; width: 100%">Chính sách</h4>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <h5><i>Hàng chính hãng, chứng nhận an toàn</i></h5>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title style="display: block;">
+                    <div class="row">
+                      <div class="col-2">
+                        <mat-icon>shopping_cart</mat-icon>
+                      </div>
+                      <div class="col-10">
+                        <h4 style="padding-top:4px;width: 100%">Giao hàng</h4>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <h5><i>Giao hàng trong 24h. Miễn phí giao hàng trên toàn quốc</i></h5>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title style="display: block;">
+                    <div class="row">
+                      <div class="col-2">
+                        <mat-icon>dialer_sip</mat-icon>
+                      </div>
+                      <div class="col-10">
+                        <h4 style="padding-top:4px; width: 100%">Hỗ trợ</h4>
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <h5><b>Số điện thoại:</b> <i>1900155678</i></h5>
+                <h5><b>Email:</b> <i>toystoreshop@gmail.com</i></h5>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div class="row" style="padding-top:20px">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-3">
+                  <input #quantityInput class="custom-quantity-input" type="number" min="1" value="1">
+                </div>
+                <div class="col-3">
+                  <button mat-raised-button color="warn" (click)="buyNow(product,quantityInput.value)">Mua ngay</button>
+                </div>
+                <div class="col-4">
+                  <button mat-raised-button color="warn" (click)="addToCart(product,quantityInput.value)">Thêm vào giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <h2>Mô tả sản phẩm</h2>
+      <span class="font-size-14">
+        {{product.description}}
+      </span>
+    </div>
+  </ng-container>
+</div>

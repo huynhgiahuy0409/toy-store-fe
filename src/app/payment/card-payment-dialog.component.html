@@ -1,0 +1,59 @@
+
+
+
+
+<form [formGroup] = 'cardPaymentForm'(ngSubmit)="paymentConfirmation()">
+  <div class="row">
+    <div class="col-10">
+      <h1 mat-dialog-title><b>Thông tin thanh toán</b></h1>
+    </div>
+    <div class="col-2">
+      <div class="row">
+        <div class="col-6"><mat-icon>watch_later</mat-icon></div>
+        <div class="col-6">
+          <h2>{{counter$ | async}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-content class="mat-typography">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Card Holder Name</mat-label>
+              <input matInput type="text" formControlName="cardHolderName">
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Card Number</mat-label>
+              <input matInput type="text" formControlName="cardNumber">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <mat-form-field appearance="fill">
+              <mat-label>CVV/CVC</mat-label>
+              <input matInput type="password" formControlName="password">
+            </mat-form-field>
+          </div>
+          <div class="col-6">
+            <mat-form-field appearance="fill">
+              <mat-label>Expried Date</mat-label>
+              <input type="date" matInput formControlName="expiredDate">
+            </mat-form-field>
+          </div>
+        </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button class="btn-color" type='submit'>Xác nhận thanh toán</button>
+      <button mat-raised-button mat-dialog-close class="btn-color">Huỷ</button>
+    </mat-dialog-actions>
+  </form>
+
+<ng-container>
+
+</ng-container>

@@ -1,0 +1,70 @@
+
+<div class="container padding-top-20">
+  <div class="row">
+    <div class="col-1">
+      <mat-icon>list</mat-icon>
+    </div>
+    <div class="col-11">
+      <h3><b>Danh sách hoá đơn của bạn</b></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="orderDataSource" matSort style="width: 100%;">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Mã đơn hàng </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Ngày </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.createdDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="orderBy">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Gửi đến </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.user.fullName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPayment">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Thành tiền </th>
+          <td mat-cell *matCellDef="let element" class="text-center"> {{element.order.totalPayment | currency:'VND'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Tình trạng </th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <div *ngIf="element.order.payment.status == '1' "  class="text-center">
+              Đã thanh toán
+            </div>
+            <div *ngIf="element.order.payment.status == '0' "  class="text-center">
+              Chưa thanh toán
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Thao tác </th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+              <div class="row justify-content-center">
+                <div class="col-4">
+                  <button mat-raised-button color="warn">{{element.action}}</button>
+                </div>
+              </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+       <!--  <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr> -->
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[4, 6, 8, 10]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+</div>

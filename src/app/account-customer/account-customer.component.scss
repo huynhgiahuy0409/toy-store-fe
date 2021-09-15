@@ -1,0 +1,33 @@
+body {
+  font-family: 'Montserrat',sans-serif;
+    font-size:20px
+}
+.font-14, body {
+  font-size: 14px;
+}
+.account-nav-title{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 20px 0;
+}
+.account-nav > span{
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 15px 25px;
+  font-weight: 400;
+  cursor: pointer;
+
+}
+.account-nav > span:hover{
+  background-color: rgb(233, 189, 198);
+  color:white;
+  border-radius: 4px;
+}
+.crimson-color{
+  background-color: crimson;
+  color: white
+}
+.back-ground-color-active{
+  background-color: crimson;
+  color:white
+}
