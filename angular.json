@@ -41,7 +41,6 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "toy-store:build:production",
               "proxyConfig": "proxy.conf.json",
               "budgets": [
                 {
