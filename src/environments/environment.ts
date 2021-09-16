@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://toy-store-be.herokuapp.com/'
 };
 
 /*

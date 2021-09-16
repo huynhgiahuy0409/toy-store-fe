@@ -3,7 +3,7 @@ import { User } from './core/models/user/user.model';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AppState } from './core/store/app.state';
-
+import { environment } from './../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +12,7 @@ import { AppState } from './core/store/app.state';
 export class AppComponent implements OnInit{
   user: User | null = null;
   ngOnInit(): void {
+    console.log(environment.production);
   }
 
   constructor(private store: Store<AppState>, private router: Router) {}
