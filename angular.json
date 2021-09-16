@@ -41,6 +41,8 @@
           },
           "configurations": {
             "production": {
+              "browserTarget": "toy-store:build:production",
+              "proxyConfig": "proxy.conf.json",
               "budgets": [
                 {
                   "type": "initial",
@@ -59,8 +61,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "browserTarget": "toy-store:build:production",
-              "proxyConfig": "proxy.conf.json",
               "outputHashing": "all"
             },
 
