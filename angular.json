@@ -79,10 +79,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "toy-store:build:production"
+              "browserTarget": "toy-store:build:production",
+              "proxyConfig": "src/proxy-local.conf.json"
             },
             "development": {
-              "browserTarget": "toy-store:build:development"
+              "browserTarget": "toy-store:build:development",
+              "proxyConfig": "src/proxy-local.conf.json"
             }
           },
           "defaultConfiguration": "development"
