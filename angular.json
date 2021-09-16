@@ -80,11 +80,11 @@
           "configurations": {
             "production": {
               "browserTarget": "toy-store:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "proxy.conf.json"
             },
             "development": {
               "browserTarget": "toy-store:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
