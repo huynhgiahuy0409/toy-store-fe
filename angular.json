@@ -59,8 +59,11 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "browserTarget": "toy-store:build:production",
+              "proxyConfig": "proxy.conf.json",
               "outputHashing": "all"
             },
+
             "development": {
               "buildOptimizer": false,
               "optimization": false,
