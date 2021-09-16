@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://toy-store-be.herokuapp.com/api",
+    "target": "http://localhost:8082",
     "secure": false,
     "changeOrigin": true,
     "xfwd": true,
