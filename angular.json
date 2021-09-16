@@ -59,7 +59,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "proxyConfig": "proxy.conf.json",
               "outputHashing": "all"
             },
             "development": {
