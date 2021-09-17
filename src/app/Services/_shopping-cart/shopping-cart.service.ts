@@ -39,7 +39,7 @@ export class ShoppingCartService {
   mergeCart(pendingOrderItems: PendingOrderItem[]):Observable<PendingOrderItem[]> | null{
     const userId = this.cookieService.get('uid');
     if (userId) {
-      const url = `/api/cart/merge?userId=${userId}`;
+      const url = `https://toy-store-be.herokuapp.com/api/cart/merge?userId=${userId}`;
       return this.httpClient.post<PendingOrderItem[]>(
         url,
         pendingOrderItems,
