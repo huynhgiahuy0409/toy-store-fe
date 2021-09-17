@@ -102,8 +102,8 @@ export class ProductService {
         pageSize: limit,
       },
     };
-    let prams = new HttpParams(httpParamOptions);
-    this.httpOptions.params = param;
+    let params = new HttpParams(httpParamOptions);
+    this.httpOptions.params = params;
     return this.httpClient
       .get<PaginationResult<Product>>(url, this.httpOptions)
       .pipe(
