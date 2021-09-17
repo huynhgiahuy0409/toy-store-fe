@@ -14,6 +14,6 @@ export class AgeService {
   };
   constructor(private httClient: HttpClient) {}
   findAll(): Observable<Age[]> {
-    return this.httClient.get<Age[]>('/api/ages', this.httpOptions);
+    return this.httClient.get<Age[]>('https://toy-store-be.herokuapp.com//api/ages', this.httpOptions);
   }
 }
