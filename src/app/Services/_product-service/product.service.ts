@@ -105,7 +105,7 @@ export class ProductService {
     let prams = new HttpParams(httpParamOptions);
     this.httpOptions.params = param;
     return this.httpClient
-      .get<PaginationResult<Product>>(`url`, this.httpOptions)
+      .get<PaginationResult<Product>>(url, this.httpOptions)
       .pipe(
         tap((products) => {
           this.pagingBSub.next({
