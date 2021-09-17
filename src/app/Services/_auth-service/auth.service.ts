@@ -57,7 +57,7 @@ export class AuthService implements OnInit {
   public createAuthenticationToken(
     authenticationRequest: AuthenticationRequest
   ): Observable<AuthenticationResponse> {
-    const url = `https://toy-store-be.herokuapp.com/api/brands/api/authenticate`;
+    const url = `https://toy-store-be.herokuapp.com/api/authenticate`;
     return this.httpClient
       .post<AuthenticationResponse>(
         url,
@@ -104,7 +104,7 @@ export class AuthService implements OnInit {
   logout() {
     if (this.cookieService.check('a-t')) {
       this.httpClient
-        .post<any>(`https://toy-store-be.herokuapp.com/api/brands/api/revoke-token`, this.httpOptions)
+        .post<any>(`https://toy-store-be.herokuapp.com/api/revoke-token`, this.httpOptions)
         .subscribe();
       localStorage.removeItem('pendingOrders');
       localStorage.removeItem('summaryCart');
@@ -159,7 +159,7 @@ export class AuthService implements OnInit {
   refreshToken(): Observable<AuthenticationResponse> {
     console.log("Refreshed Token")
     return this.httpClient
-      .post<AuthenticationResponse>(`https://toy-store-be.herokuapp.com/api/brands/api/refresh-token`, this.httpOptions)
+      .post<AuthenticationResponse>(`https://toy-store-be.herokuapp.com/api/refresh-token`, this.httpOptions)
       .pipe(
         tap((response) => {
           this.authResponseBSub.next(response);
