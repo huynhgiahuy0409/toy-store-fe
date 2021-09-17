@@ -15,7 +15,7 @@ export class BrandService {
   constructor(private httpClient: HttpClient) {}
   findAll(): Observable<Brand[]> {
     return this.httpClient.get<Brand[]>(
-      `/api/brands`,
+      `https://toy-store-be.herokuapp.com/api/brands`,
       this.httpOptions
     );
   }

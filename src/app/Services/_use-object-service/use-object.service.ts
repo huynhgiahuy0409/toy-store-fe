@@ -15,6 +15,6 @@ export class UseObjectService {
   };
   constructor(private httpClient: HttpClient) {}
   findAll(): Observable<UseObject[]> {
-    return this.httpClient.get<UseObject[]>(`/api/use-objects`, this.httpOptions);
+    return this.httpClient.get<UseObject[]>(`https://toy-store-be.herokuapp.com/api/use-objects`, this.httpOptions);
   }
 }

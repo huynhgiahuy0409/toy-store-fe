@@ -61,7 +61,7 @@ export class ProductService {
     pageIndex: number = this.initialPagination.pageIndex,
     limit: number = this.initialPagination.pageItems
   ): Observable<PaginationResult<Product>> {
-    let url = `https://toy-store-be.herokuapp.com/api/product-page?`;
+    let url = `https://toy-store-be.herokuapp.com/api/product-page`;
     let httpParamOptions: HttpParamsOptions = {
       fromObject: {
         pageIndex: pageIndex,
@@ -94,7 +94,7 @@ export class ProductService {
     page: number = this.initialPagination.pageIndex,
     limit: number = this.initialPagination.pageItems
   ): Observable<PaginationResult<Product>> {
-    let url = '/api/product-page/search?';
+    let url = 'https://toy-store-be.herokuapp.com/api/product-page/search?';
     let httpParamOptions = {
       fromObject: {
         searchValue: searchValue,
