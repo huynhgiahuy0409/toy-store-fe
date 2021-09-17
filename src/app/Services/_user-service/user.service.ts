@@ -14,7 +14,7 @@ export class UserService{
   constructor(private httpClient: HttpClient){
   }
   updateUser(user: User): Observable<User>{
-    let url = `/api/user/update`;
+    let url = `https://toy-store-be.herokuapp.com/api/user/update`;
     console.log(user)
     return this.httpClient.post<User>(url, user, this.httpOptions);
   }

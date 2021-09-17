@@ -15,11 +15,11 @@ export class PaymentService {
   };
   constructor(private httpClient: HttpClient) {}
   createOrder(order: OrderRequest): Observable<OrderRequest> {
-    let url = `/api/order`;
+    let url = `https://toy-store-be.herokuapp.com/api/order`;
     return this.httpClient.post<OrderRequest>(url, order, this.httpOptions);
   }
   getRecentOrdersByUserId(userId: string): Observable<Order[]> {
-    let url = `/api/order?userId=${userId}&limit=5`;
+    let url = `https://toy-store-be.herokuapp.com/api/order?userId=${userId}&limit=5`;
     return this.httpClient.get<Order[]>(url, this.httpOptions);
   }
 }

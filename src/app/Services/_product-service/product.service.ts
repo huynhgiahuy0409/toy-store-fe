@@ -117,7 +117,7 @@ export class ProductService {
       );
   }
   findOne(productId: number): Observable<Product>{
-    const url = "/api/product-detail"
+    const url = "https://toy-store-be.herokuapp.com/api/product-detail"
     const httpParamOptions = {
       fromObject: {
         productId: productId

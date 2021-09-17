@@ -31,7 +31,7 @@ export class ShoppingCartService {
   ): Observable<any> | null {
     const userId = this.cookieService.get('uid');
     if (userId) {
-      const url = `/api/cart/update?userId=${userId}&action=${action}`;
+      const url = `https://toy-store-be.herokuapp.com/api/cart/update?userId=${userId}&action=${action}`;
       return this.httpClient.post<any>(url, pendingOrderItem, this.httpOptions);
     }
     return null;
@@ -49,7 +49,7 @@ export class ShoppingCartService {
     return null;
   }
   getShoppingCart(userId: number): Observable<PendingOrderItem[]>{
-    const url = `/api/cart?userId=${userId}`;
+    const url = `https://toy-store-be.herokuapp.com/api/cart?userId=${userId}`;
     return this.httpClient.get<PendingOrderItem[]>(url, this.httpOptions);
   }
   computeTotalPrice(pendingOrderItem: PendingOrderItem){
@@ -62,7 +62,7 @@ export class ShoppingCartService {
     return totalPrice
   }
   getCoupon(code: string): Observable<Coupon>{
-    let url = `/api/coupon?code=${code}`;
+    let url = `https://toy-store-be.herokuapp.com/api/coupon?code=${code}`;
     return this.httpClient.get<Coupon>(url, this.httpOptions);
   }
 }

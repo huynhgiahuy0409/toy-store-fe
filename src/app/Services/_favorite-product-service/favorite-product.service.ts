@@ -22,7 +22,7 @@ export class FavoriteProductService {
     userId: number,
     productId: number
   ): Observable<FavoriteProduct> {
-    let url = `/api/favorite-product?userId=${userId}&productId=${productId}`;
+    let url = `https://toy-store-be.herokuapp.com/api/favorite-product?userId=${userId}&productId=${productId}`;
     return this.httpClient.post<FavoriteProduct>(url, this.httpOptions);
   }
   findAll(action: 'view' | 'remove',userId: number, pageIndex: number, limit: number, favProductId?: number): Observable<PaginationResult<FavoriteProduct>> {
@@ -41,7 +41,7 @@ export class FavoriteProductService {
       }
     }
     this.httpOptions.params = new HttpParams(this.httpParamOptions)
-    let url = `/api/favorite-product`;
+    let url = `https://toy-store-be.herokuapp.com/api/favorite-product`;
     return this.httpClient.get<PaginationResult<FavoriteProduct>>(url, this.httpOptions)
   }
 }
