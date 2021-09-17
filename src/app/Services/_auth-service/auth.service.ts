@@ -122,7 +122,6 @@ export class AuthService implements OnInit {
       const jwt = this.getAuthResponseBSubVal().jwt;
       const expiredTime = jwt.tokenExpirationDate;
       const timeOut = expiredTime.valueOf() - Date.now() - 2000;
-      console.log(timeOut)
       this.refreshTokenTimeout = setTimeout(() => {
         console.log("TIME OUT")
         /* giải quyết trường hợp cookie bị xoá hoặc bị hết hạn */
