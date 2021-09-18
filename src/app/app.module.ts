@@ -93,7 +93,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     ModalModule,
     CommonModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    CoreModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
