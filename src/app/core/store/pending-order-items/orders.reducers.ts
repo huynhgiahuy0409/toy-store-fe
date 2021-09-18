@@ -32,6 +32,7 @@ export const initialState: CartState = {
 
 
 export function ordersReducer(state = initialState, action: ordersActions.OrdersActions): CartState{
+  console.log("OK")
   switch (action.type) {
     /* khi action dispatch. Vẫn lấy trong localStorage */
     case ordersActions.RESET_ORDER:
