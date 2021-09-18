@@ -31,12 +31,11 @@ export class ProductComponent implements OnInit {
     private cartService: ShoppingCartService,
     private store: Store,
   ) {
-    activatedRoute.snapshot.url.forEach((param) => {
-      this.page = param['path'] == 'sale' ? 'sale' : undefined;
-      if (param['path'] == 'sale') {
+    activatedRoute.snapshot.url.forEach((urlSegment) => {
+      if (urlSegment['path'] == 'sale') {
         this.page = 'sale';
         this.title = 'SẢN PHẨM KHUYẾN MÃI';
-      } else if (param['path'] == 'new') {
+      } else if (urlSegment['path'] == 'new') {
         this.page = 'new';
         this.title = 'SẢN PHẨM MỚI';
       } else {

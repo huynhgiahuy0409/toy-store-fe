@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log(err);
         if (
           [401, 403].includes(err.status) &&
-          this.authenticationService.getAuthResponseBSubVal
+          this.authenticationService.getAuthResponseBSubVal()
         ) {
           console.log(err);
         }
