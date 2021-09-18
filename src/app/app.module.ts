@@ -36,7 +36,6 @@ import { AuthService } from './Services/_auth-service/auth.service';
 import { MaterialModule, PaginatorComponent } from './paginator/paginator.component';
 import { ProductComponent } from './product/product.component';
 import { AdditionDialog, ProductListComponent } from './product/product-list/product-list.component';
-import { ProductItemComponent } from './product/product-item/product-item.component';
 import { ProductFilterComponent } from './product/product-filter/product-filter.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {PaymentLoginDialog} from './shoping-cart/summary-box/summary-box.component';
@@ -68,7 +67,6 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     PaginatorComponent,
     ProductComponent,
     ProductListComponent,
-    ProductItemComponent,
     ProductFilterComponent,
     AccountCustomerComponent,
     AccountComponent,
