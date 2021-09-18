@@ -7,7 +7,6 @@ import { ordersReducer } from './store/pending-order-items/orders.reducers';
 
 @NgModule({
   imports: [
-    StoreModule.forFeature('feature_login', loginReducer),
     StoreModule.forFeature('feature_shoppingCart', ordersReducer),
     EffectsModule.forFeature([LoginEffects]),
   ],
