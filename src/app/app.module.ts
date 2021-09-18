@@ -46,8 +46,6 @@ import { FavoritesComponent } from './account-customer/favorites/favorites.compo
 import { DeliveryAddressComponent } from './account-customer/delivery-address/delivery-address.component';
 import { RouterModule } from '@angular/router';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
-import { loginReducer } from './core/store/auth/login.reducer';
-import { ordersReducer } from './core/store/pending-order-items/orders.reducers';
 
 
 
@@ -83,7 +81,7 @@ import { ordersReducer } from './core/store/pending-order-items/orders.reducers'
     PaymentSuccessDialog,
     UpdateContactDiagLog,
     CouponAuditDiaLog,
-    ProductDetailComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +93,7 @@ import { ordersReducer } from './core/store/pending-order-items/orders.reducers'
     ModalModule,
     CommonModule,
     ReactiveFormsModule,
+    CoreModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -116,7 +115,7 @@ import { ordersReducer } from './core/store/pending-order-items/orders.reducers'
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     CookieService,
-    AuthService,
+    AuthService
   ],
   bootstrap: [AppComponent],
 })
