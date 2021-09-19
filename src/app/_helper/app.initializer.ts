@@ -5,9 +5,7 @@ export function appInitializer(authenticationService: AuthService, store: Store)
   return () => {
     if (authenticationService.hasToken()) {
       console.log('Refresh token called');
-      return new Promise((resolve) => {
-        authenticationService.refreshToken().subscribe().add(resolve);
-      });
+      return authenticationService.refreshToken()
     } else {
       const isVisited = localStorage['__visited'];
       if (isVisited) {
