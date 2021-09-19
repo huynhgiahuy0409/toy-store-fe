@@ -21,7 +21,7 @@ export class ProductService {
     useObjectId: null,
     brandId: null,
     priceRange: null,
-    order: null
+    order: null,
   };
   initialPagination: Pagination = {
     totalLength: -1,
@@ -35,8 +35,7 @@ export class ProductService {
   );
   allProductItems$ = this.allProductItemsBSub.asObservable();
   productFilterBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
-  productFilter$: Observable<ProductFilter> = this.productFilterBSub.pipe(
-  );
+  productFilter$: Observable<ProductFilter> = this.productFilterBSub.pipe();
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -44,19 +43,21 @@ export class ProductService {
     }),
     params: {},
   };
-  constructor(private httpClient: HttpClient,
+  constructor(
+    private httpClient: HttpClient,
     private favProductService: FavoriteProductService,
     private cookieService: CookieService,
     private cartService: ShoppingCartService,
     private store: Store,
-    private dialog: MatDialog,) {}
+    private dialog: MatDialog
+  ) {}
   /* HELPER */
   showProducts(
     ageRangeIds: number[] | null,
     userObjectId: number | null,
     brandId: number | null,
     priceRange: [number, number] | null,
-    order: [string,string] | null,
+    order: [string, string] | null,
     page?: string,
     pageIndex: number = this.initialPagination.pageIndex,
     limit: number = this.initialPagination.pageItems
@@ -69,12 +70,14 @@ export class ProductService {
       },
     };
     /* If input has a value then create param */
-    ageRangeIds ? httpParamOptions.fromObject!.ageIds = ageRangeIds : null
-    userObjectId ? httpParamOptions.fromObject!.genderId = userObjectId : null
-    brandId ? httpParamOptions.fromObject!.brandId = brandId : null
-    priceRange ? httpParamOptions.fromObject!.priceRange = priceRange : null
-    order ? httpParamOptions.fromObject!.order = order : null
-    page ? httpParamOptions.fromObject!.page = page : null
+    ageRangeIds ? (httpParamOptions.fromObject!.ageIds = ageRangeIds) : null;
+    userObjectId
+      ? (httpParamOptions.fromObject!.genderId = userObjectId)
+      : null;
+    brandId ? (httpParamOptions.fromObject!.brandId = brandId) : null;
+    priceRange ? (httpParamOptions.fromObject!.priceRange = priceRange) : null;
+    order ? (httpParamOptions.fromObject!.order = order) : null;
+    page ? (httpParamOptions.fromObject!.page = page) : null;
     let params = new HttpParams(httpParamOptions);
     this.httpOptions.params = params;
     return this.httpClient
@@ -116,15 +119,15 @@ export class ProductService {
         })
       );
   }
-  findOne(productId: number): Observable<Product>{
-    const url = "https://toy-store-be.herokuapp.com/api/product-detail"
+  findOne(productId: number): Observable<Product> {
+    const url = 'https://toy-store-be.herokuapp.com/api/product-detail';
     const httpParamOptions = {
       fromObject: {
-        productId: productId
-      }
-    }
-    this.httpOptions.params = new HttpParams(httpParamOptions)
-    return this.httpClient.get<Product>(url,this.httpOptions)
+        productId: productId,
+      },
+    };
+    this.httpOptions.params = new HttpParams(httpParamOptions);
+    return this.httpClient.get<Product>(url, this.httpOptions);
   }
 
   addToWishList(productId: number) {
@@ -168,8 +171,8 @@ export class ProductService {
       };
       pendingOrders.push(foundPendingOrder);
     }
-    const {priceToBuy} = foundPendingOrder.product
-    const {quantity} = foundPendingOrder
+    const { priceToBuy } = foundPendingOrder.product;
+    const { quantity } = foundPendingOrder;
     foundPendingOrder.totalPrice = priceToBuy * quantity;
     localStorage['pendingOrders'] = JSON.stringify(pendingOrders);
     /* change state */
