@@ -50,7 +50,7 @@ export class ProductFilterComponent implements OnInit {
       this.ageSelectFG.valueChanges.subscribe((rs) => {
         const sltAge = ageSltArr.filter((ageId) => rs[ageId + '']);
         this.productFilter.ageRangeIds = sltAge;
-        this.productService.productFilterBSub.next(this.productFilter);
+        this.productService.filterBSub.next(this.productFilter);
       });
     }, 1000);
   }
@@ -58,25 +58,24 @@ export class ProductFilterComponent implements OnInit {
     this.productService
       .searchProductsByName(this.searchValue)
       .subscribe((products) => {
-        this.productService.pagingResultBSub.next(products);
       });
   }
 
   genderChange($event: any){
     let genderId: number = $event.value;
     this.productFilter.useObjectId = genderId;
-    this.productService.productFilterBSub.next(this.productFilter);
+    this.productService.filterBSub.next(this.productFilter);
   }
   brandChange($event: any){
     let brandId: number = $event.value;
     this.productFilter.brandId = brandId;
-    this.productService.productFilterBSub.next(this.productFilter);
+    this.productService.filterBSub.next(this.productFilter);
   }
   priceRangeChange($event: any){
     console.log($event);
     let valueChoose = $event.value;
     this.productFilter.priceRange = [0, valueChoose];
-    this.productService.productFilterBSub.next(this.productFilter);
+    this.productService.filterBSub.next(this.productFilter);
   }
   formatLabel(value: number) {
     if (value >= 1000) {

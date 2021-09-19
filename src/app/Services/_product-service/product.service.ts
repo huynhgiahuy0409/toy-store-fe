@@ -1,10 +1,20 @@
 import { ShoppingCartService } from 'src/app/Services/_shopping-cart/shopping-cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParamsOptions } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParamsOptions,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Pagination, PaginationResult, PendingOrderItem, Product, ProductFilter } from 'src/app/_models';
+import {
+  Pagination,
+  PaginationResult,
+  PendingOrderItem,
+  Product,
+  ProductFilter,
+} from 'src/app/_models';
 import { delay, tap } from 'rxjs/operators';
 import { param } from 'jquery';
 import { FavoriteProductService } from '../_favorite-product-service/favorite-product.service';
@@ -24,7 +34,7 @@ export class ProductService {
     order: null,
   };
   initialPagination: Pagination = {
-    totalLength: -1,
+    totalLength: 0,
     pageItems: 6,
     pageIndex: 0,
   };
@@ -33,9 +43,9 @@ export class ProductService {
   pagingResultBSub = new BehaviorSubject<PaginationResult<Product> | null>(
     null
   );
-  allProductItems$ = this.pagingResultBSub.asObservable();
-  productFilterBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
-  productFilter$: Observable<ProductFilter> = this.productFilterBSub.pipe();
+  pagingResult$ = this.pagingResultBSub.asObservable();
+  filterBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
+  filter$: Observable<ProductFilter> = this.filterBSub.pipe();
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -111,6 +121,7 @@ export class ProductService {
       .get<PaginationResult<Product>>(url, this.httpOptions)
       .pipe(
         tap((products) => {
+          this.pagingResultBSub.next(products);
           this.pagingBSub.next({
             totalLength: products.totalLength,
             pageIndex: page,

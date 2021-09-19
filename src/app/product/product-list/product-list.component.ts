@@ -52,21 +52,23 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.productService.productFilter$
+    this.productService.filter$
       .pipe(
         concatMap((filter) => {
+          console.log(filter)
+          const {ageRangeIds , useObjectId,brandId,priceRange, order} = filter
           return this.productService.showProducts(
-            filter.ageRangeIds,
-            filter.useObjectId,
-            filter.brandId,
-            filter.priceRange,
-            filter.order,
+            ageRangeIds,
+            useObjectId,
+            brandId,
+            priceRange,
+            order,
             this.page
           );
         }),
         tap((products) => {
           this.productService.pagingResultBSub.next(products);
-          this.allProductItem$ = this.productService.allProductItems$;
+          this.allProductItem$ = this.productService.pagingResult$;
           this.pagination$ = this.productService.pagination$;
         })
       )
@@ -76,7 +78,7 @@ export class ProductListComponent implements OnInit {
     console.log(event$)
     let pageIndex = event$.pageIndex;
     let pageSize = event$.pageSize;
-    this.productService.productFilter$
+    this.productService.filter$
       .pipe(
         concatMap((filter) => {
           return this.productService.showProducts(
@@ -98,9 +100,9 @@ export class ProductListComponent implements OnInit {
   }
   orderChange($event: any) {
     console.log($event)
-    let filter = this.productService.productFilterBSub.value;
+    let filter = this.productService.filterBSub.value;
     filter.order = $event.value;
-    this.productService.productFilterBSub.next(filter);
+    this.productService.filterBSub.next(filter);
   }
   addToCart(product: Product) {
     this.productService.addToCart(product)
