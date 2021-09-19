@@ -163,6 +163,7 @@ export class AuthService implements OnInit {
         tap((response) => {
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
+          console.log(response)
           return response;
         })
       );
