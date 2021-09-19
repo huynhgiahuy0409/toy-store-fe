@@ -30,10 +30,10 @@ export class ProductService {
   };
   pagingBSub = new BehaviorSubject<Pagination>(this.initialPagination);
   pagination$ = this.pagingBSub.asObservable();
-  allProductItemsBSub = new BehaviorSubject<PaginationResult<Product> | null>(
+  pagingResultBSub = new BehaviorSubject<PaginationResult<Product> | null>(
     null
   );
-  allProductItems$ = this.allProductItemsBSub.asObservable();
+  allProductItems$ = this.pagingResultBSub.asObservable();
   productFilterBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
   productFilter$: Observable<ProductFilter> = this.productFilterBSub.pipe();
 

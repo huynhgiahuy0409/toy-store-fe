@@ -58,7 +58,7 @@ export class ProductFilterComponent implements OnInit {
     this.productService
       .searchProductsByName(this.searchValue)
       .subscribe((products) => {
-        this.productService.allProductItemsBSub.next(products);
+        this.productService.pagingResultBSub.next(products);
       });
   }
 

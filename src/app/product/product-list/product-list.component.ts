@@ -65,7 +65,7 @@ export class ProductListComponent implements OnInit {
           );
         }),
         tap((products) => {
-          this.productService.allProductItemsBSub.next(products);
+          this.productService.pagingResultBSub.next(products);
           this.allProductItem$ = this.productService.allProductItems$;
           this.pagination$ = this.productService.pagination$;
         })
@@ -91,7 +91,7 @@ export class ProductListComponent implements OnInit {
           );
         }),
         tap((products) => {
-          this.productService.allProductItemsBSub.next(products);
+          this.productService.pagingResultBSub.next(products);
         })
       )
       .subscribe();
