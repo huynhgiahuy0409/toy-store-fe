@@ -104,8 +104,6 @@ export class AccountComponent implements OnInit {
       this.deliveryAddress = user!.address;
     });
 
-
-
     const userId = this.cookieService.get('uid')
     this.paymentService
       .getRecentOrdersByUserId(userId)

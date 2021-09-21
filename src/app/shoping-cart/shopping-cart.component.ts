@@ -27,7 +27,6 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit(): void {
     if(this.cookieService.check('a-t')){
       const uid = Number.parseInt(this.cookieService.get('uid'))
-      console.log(uid)
       this.shoppingCartService.getShoppingCart(uid).pipe(tap(pendingOrderItems => {
         console.log(pendingOrderItems)
         pendingOrderItems.forEach(pendingOrderItem => {
@@ -40,19 +39,17 @@ export class ShoppingCartComponent implements OnInit {
     this.pendingOrders$ = this.store.select(pendingOrdersSelection)
   }
   changeQuantity(pendingOrderItem: PendingOrderItem, value: string){
-    /* Lấy danh sách pendingOrders từ LS */
     let pendingOrders = JSON.parse(
       localStorage.getItem('pendingOrders') || ''
     ) as PendingOrderItem[];
-    /* Tìm ra sản phẩm có id được thay đổi quantity trong danh sách trên */
     const foundOrder = pendingOrders.find((order) => order.product.id === pendingOrderItem.product.id);
-    /* Đổi số lượng, và cập nhật tổng giá của sản phẩm trong order */
     if (foundOrder) {
       foundOrder.quantity = Number.parseInt(value);
       foundOrder.totalPrice = this.shoppingCartService.computeTotalPrice(foundOrder)
     }
-    /* Lưu lại vào LS */
+    /* save to db */
     this.shoppingCartService.updateCart('add', foundOrder!)?.subscribe();
+    /* save to LS */
     localStorage['pendingOrders'] =  JSON.stringify(pendingOrders);
     this.store.dispatch(updateQuantity())
   }
@@ -60,11 +57,10 @@ export class ShoppingCartComponent implements OnInit {
     let pendingOrders = JSON.parse(
       localStorage.getItem('pendingOrders') || ''
     ) as PendingOrderItem[];
-    /* lọc ra sản phẩm có Id được xoá */
-    const foundOrder = pendingOrders.find((order) => order.product.id === id);
+    const foundOrder = pendingOrders.find((pendingOrderItem) => pendingOrderItem.product.id === id);
     pendingOrders = pendingOrders.filter((item) => item.product.id !== id);
-    this.shoppingCartService.updateCart('remove', foundOrder!)?.subscribe();
     localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
     this.store.dispatch(removeOrder());
+    this.shoppingCartService.updateCart('remove', foundOrder!)?.subscribe();
   }
 }

@@ -161,7 +161,7 @@ export class ProductService {
         });
     } else {
       this.dialog.open(AdditionDialog, {
-        width: '450px',
+        width: '500',
         data: 'NOT_LOGGED_IN',
       });
     }
