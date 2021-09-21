@@ -56,7 +56,7 @@ export class AuthService implements OnInit {
   /* CALL API */
   public createAuthenticationToken(
     authenticationRequest: AuthenticationRequest
-  ): Observable<AuthenticationResponse> {
+  ): Observable<AuthenticationResponse | any> {
     const url = `https://toy-store-be.herokuapp.com/api/authenticate`;
     return this.httpClient
       .post<AuthenticationResponse>(
@@ -68,8 +68,9 @@ export class AuthService implements OnInit {
         tap((response) => {
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
+          console.log(response)
           /* login is completed */
-          if (response.jwt) {
+          if (response instanceof AuthenticatorAssertionResponse) {
             /* merge cart when login */
             if (localStorage['pendingOrders']) {
               let pendingOrderItems: PendingOrderItem[] = JSON.parse(
