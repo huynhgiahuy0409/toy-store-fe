@@ -34,7 +34,7 @@ export class ProductListComponent implements OnInit {
   @Input()
   page!: string | undefined;
   pagination$!: Observable<Pagination>;
-  allProductItem$!: Observable<PaginationResult<Product> | null>;
+  pagingResult$!: Observable<PaginationResult<Product> | null>;
   orders: Order[] = [
     { value: ['price', 'asc'], viewValue: 'Sắp xếp theo giá tăng dần' },
     { value: ['price', 'desc'], viewValue: 'Sắp xếp theo giá giảm dần' },
@@ -55,8 +55,8 @@ export class ProductListComponent implements OnInit {
     this.productService.filter$
       .pipe(
         concatMap((filter) => {
+          const {ageRangeIds , useObjectId,brandId,priceRange, orderBy: order} = filter
           console.log(filter)
-          const {ageRangeIds , useObjectId,brandId,priceRange, order} = filter
           return this.productService.showProducts(
             ageRangeIds,
             useObjectId,
@@ -68,7 +68,7 @@ export class ProductListComponent implements OnInit {
         }),
         tap((products) => {
           this.productService.pagingResultBSub.next(products);
-          this.allProductItem$ = this.productService.pagingResult$;
+          this.pagingResult$ = this.productService.pagingResult$;
           this.pagination$ = this.productService.pagination$;
         })
       )
@@ -86,7 +86,7 @@ export class ProductListComponent implements OnInit {
             filter.useObjectId,
             filter.brandId,
             filter.priceRange,
-            filter.order,
+            filter.orderBy,
             this.page,
             pageIndex,
             pageSize
@@ -101,7 +101,7 @@ export class ProductListComponent implements OnInit {
   orderChange($event: any) {
     console.log($event)
     let filter = this.productService.filterBSub.value;
-    filter.order = $event.value;
+    filter.orderBy = $event.value;
     this.productService.filterBSub.next(filter);
   }
   addToCart(product: Product) {

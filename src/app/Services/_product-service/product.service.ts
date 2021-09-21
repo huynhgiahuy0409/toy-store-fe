@@ -31,7 +31,7 @@ export class ProductService {
     useObjectId: null,
     brandId: null,
     priceRange: null,
-    order: null,
+    orderBy: null,
   };
   initialPagination: Pagination = {
     totalLength: 0,
@@ -125,7 +125,7 @@ export class ProductService {
           this.pagingBSub.next({
             totalLength: products.totalLength,
             pageIndex: page,
-            pageItems: this.initialPagination.pageItems,
+            pageItems: limit,
           });
         })
       );
@@ -160,6 +160,10 @@ export class ProductService {
           }
         });
     } else {
+      this.dialog.open(AdditionDialog, {
+        width: '450px',
+        data: 'NOT_LOGGED_IN',
+      });
     }
   }
   addToCart(product: Product) {

@@ -19,7 +19,7 @@ export interface ProductFilter {
   useObjectId: number | null;
   brandId: number | null;
   priceRange: [number, number] | null;
-  order: [string, string] | null;
+  orderBy: [string, string] | null;
 }
 
 export interface PendingOrderItem{

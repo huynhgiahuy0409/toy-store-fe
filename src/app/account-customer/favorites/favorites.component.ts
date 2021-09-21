@@ -101,7 +101,7 @@ export class FavoritesComponent implements OnInit {
     const { priceToBuy } = foundPendingOrder.product;
     const { quantity } = foundPendingOrder;
     foundPendingOrder.totalPrice = priceToBuy * quantity;
-    localStorage['pendingOrders'] = JSON.stringify(pendingOrders);
+    localStorage.setItem('pendingOrders', JSON.stringify(pendingOrders));
     /* change state */
     this.store.dispatch(addProductIntoOrder());
     /* add pendingOrderItem to server */

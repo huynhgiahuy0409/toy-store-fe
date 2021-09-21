@@ -22,7 +22,7 @@
     <div class="row product-categorie-box">
         <div class="tab-content">
                 <div  iv class="row">
-                  <ng-container *ngIf="(allProductItem$ | async) as allProductItem">
+                  <ng-container *ngIf="(pagingResult$ | async) as allProductItem">
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4" *ngFor="let product of allProductItem.items">
                         <div class="products-single fix">
                             <div class="box-img-hover">

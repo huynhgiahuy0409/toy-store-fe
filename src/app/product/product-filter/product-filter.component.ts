@@ -57,8 +57,7 @@ export class ProductFilterComponent implements OnInit {
   search() {
     this.productService
       .searchProductsByName(this.searchValue)
-      .subscribe((products) => {
-      });
+      .subscribe();
   }
 
   genderChange($event: any){
