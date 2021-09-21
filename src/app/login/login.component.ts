@@ -74,18 +74,19 @@ export class LoginComponent implements OnInit {
         .createAuthenticationToken(authenticationRequest)
         .subscribe((authenticationResponse) => {
           console.log(authenticationResponse)
-          if (authenticationResponse instanceof AuthenticatorAssertionResponse) {
+          if (authenticationResponse) {
             if (this.routeConfig === 'login/payment') {
               this.router.navigate(['/shopping-cart']);
             } else {
               this.router.navigate(['/home']);
             }
-          } else if (!authenticationResponse) {
+          } else if (authenticationResponse === null) {
             this.mess = 'Mật khẩu không đúng!';
           }
-          if (authenticationResponse.error) {
+          /* if (authenticationResponse.error) {
+            console.log(authenticationResponse.error)
             this.mess = authenticationResponse.error.error;
-          }
+          } */
         });
     }
   }
