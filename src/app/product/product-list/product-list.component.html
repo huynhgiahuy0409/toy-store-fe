@@ -6,7 +6,7 @@
             <div class="toolbar-sorter-right">
               <mat-form-field appearance="fill" style=" width: 600px;font-size: 14px;">
                 <mat-label>--Sắp xếp theo--</mat-label>
-                <mat-select (selectionChange)="orderChange($event)">
+                <mat-select (selectionChange)="orderByChange($event)">
                   <mat-option>None</mat-option>
                   <mat-option *ngFor="let order of orders" [value] = "order.value">{{order.viewValue}}</mat-option>
                 </mat-select>

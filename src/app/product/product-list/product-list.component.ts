@@ -98,7 +98,7 @@ export class ProductListComponent implements OnInit {
       )
       .subscribe();
   }
-  orderChange($event: any) {
+  orderByChange($event: any) {
     console.log($event)
     let filter = this.productService.filterBSub.value;
     filter.orderBy = $event.value;

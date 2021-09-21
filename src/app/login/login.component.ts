@@ -28,7 +28,7 @@ export class AccessDeniedComponent{
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form!: FormGroup;
+  loginForm!: FormGroup;
   mess!: string;
   routeConfig!: string;
   constructor(
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.loginForm = this.fb.group({
       username: [
         '',
         [
@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-    const username = this.form.value['username'];
-    const password = this.form.value['password'];
+    const username = this.loginForm.value['username'];
+    const password = this.loginForm.value['password'];
     const authenticationRequest: AuthenticationRequest = {
       username: username,
       password: password,
@@ -73,13 +73,14 @@ export class LoginComponent implements OnInit {
       this.authService
         .createAuthenticationToken(authenticationRequest)
         .subscribe((authenticationResponse) => {
+          console.log(authenticationResponse)
           if (authenticationResponse) {
             if (this.routeConfig === 'login/payment') {
               this.router.navigate(['/shopping-cart']);
             } else {
               this.router.navigate(['/home']);
             }
-          } else if (authenticationResponse === null) {
+          } else if (!authenticationResponse) {
             this.mess = 'Mật khẩu không đúng!';
           }
          /*  if (authenticationResponse.error) {

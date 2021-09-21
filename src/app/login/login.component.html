@@ -1,5 +1,5 @@
 <div id="logreg-forms">
-  <form  [formGroup] = "form" (ngSubmit)="login()" class="form-signin">
+  <form  [formGroup] = "loginForm" (ngSubmit)="login()" class="form-signin">
       <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
       <div class="social-login">
           <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
@@ -13,7 +13,7 @@
 
       <input formControlName="username" type="text" id="inputUsername" class="form-control" placeholder="Username" >
       <div class="col alert alert-danger" role="alert"
-        *ngIf="form.hasError('invalidUsername','username') && form.get('username')!.touched">
+        *ngIf="loginForm.hasError('invalidUsername','username') && loginForm.get('username')!.touched">
         Tài khoản không hợp lệ!
       </div>
 
