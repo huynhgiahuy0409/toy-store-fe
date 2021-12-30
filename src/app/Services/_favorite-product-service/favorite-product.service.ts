@@ -1,8 +1,14 @@
 import { FavoriteProduct } from './../../_models/product';
-import { HttpHeaders, HttpClient, HttpParams, HttpParamsOptions } from '@angular/common/http';
+import {
+  HttpHeaders,
+  HttpClient,
+  HttpParams,
+  HttpParamsOptions,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaginationResult } from 'src/app/_models';
+import { DOMAIN } from 'src/app/_models/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +18,7 @@ export class FavoriteProductService {
     headers: new HttpHeaders({
       ContentType: 'application/json',
     }),
-    params: {}
+    params: {},
   };
   private httpParamOptions: HttpParamsOptions = {
     fromObject: {},
@@ -22,26 +28,35 @@ export class FavoriteProductService {
     userId: number,
     productId: number
   ): Observable<FavoriteProduct> {
-    let url = `https://toy-store-be.herokuapp.com/api/favorite-product?userId=${userId}&productId=${productId}`;
+    let url = `${DOMAIN}/api/favorite-product?userId=${userId}&productId=${productId}`;
     return this.httpClient.post<FavoriteProduct>(url, this.httpOptions);
   }
-  findAll(action: 'view' | 'remove',userId: number, pageIndex: number, limit: number, favProductId?: number): Observable<PaginationResult<FavoriteProduct>> {
+  findAll(
+    action: 'view' | 'remove',
+    userId: number,
+    pageIndex: number,
+    limit: number,
+    favProductId?: number
+  ): Observable<PaginationResult<FavoriteProduct>> {
     this.httpParamOptions = {
       fromObject: {
         action: action,
         userId: userId,
         pageIndex: pageIndex,
-        limit: limit
-      }
+        limit: limit,
+      },
     };
-    if(action == 'remove' && favProductId){
+    if (action == 'remove' && favProductId) {
       this.httpParamOptions.fromObject = {
         ...this.httpParamOptions.fromObject,
-        favProductId: favProductId
-      }
+        favProductId: favProductId,
+      };
     }
-    this.httpOptions.params = new HttpParams(this.httpParamOptions)
+    this.httpOptions.params = new HttpParams(this.httpParamOptions);
     let url = `https://toy-store-be.herokuapp.com/api/favorite-product`;
-    return this.httpClient.get<PaginationResult<FavoriteProduct>>(url, this.httpOptions)
+    return this.httpClient.get<PaginationResult<FavoriteProduct>>(
+      url,
+      this.httpOptions
+    );
   }
 }

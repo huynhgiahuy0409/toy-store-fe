@@ -1,6 +1,9 @@
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
-import { updateCart, updatePendingOrderItems } from '../../core/store/pending-order-items/orders.actions';
+import {
+  updateCart,
+  updatePendingOrderItems,
+} from '../../core/store/pending-order-items/orders.actions';
 import { ShoppingCartService } from 'src/app/Services/_shopping-cart/shopping-cart.service';
 import {
   AuthenticationResponse,
@@ -19,6 +22,7 @@ import { tap } from 'rxjs/operators';
 import { resetOrder as resetCart } from 'src/app/core/store/pending-order-items/orders.actions';
 import { AccessDeniedComponent } from 'src/app/login/login.component';
 import { Router } from '@angular/router';
+import { DOMAIN } from 'src/app/_models/constant';
 @Injectable({
   providedIn: 'root',
 })
@@ -57,7 +61,7 @@ export class AuthService implements OnInit {
   public createAuthenticationToken(
     authenticationRequest: AuthenticationRequest
   ): Observable<AuthenticationResponse | any> {
-    const url = `https://toy-store-be.herokuapp.com/api/authenticate`;
+    const url = `${DOMAIN}/api/authenticate`;
     return this.httpClient
       .post<AuthenticationResponse>(
         url,
@@ -66,9 +70,10 @@ export class AuthService implements OnInit {
       )
       .pipe(
         tap((response) => {
+          console.log('okkkkkkkk');
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
-          console.log(response)
+          console.log(response);
           /* login is completed */
           if (response instanceof AuthenticatorAssertionResponse) {
             /* merge cart when login */
@@ -105,7 +110,7 @@ export class AuthService implements OnInit {
   logout() {
     if (this.cookieService.check('a-t')) {
       this.httpClient
-        .post<any>(`https://toy-store-be.herokuapp.com/api/revoke-token`, this.httpOptions)
+        .post<any>(`${DOMAIN}/api/revoke-token`, this.httpOptions)
         .subscribe();
       localStorage.removeItem('pendingOrders');
       localStorage.removeItem('summaryCart');
@@ -119,52 +124,63 @@ export class AuthService implements OnInit {
   private refreshTokenTimeout!: any;
   private startRefreshTokenTimer() {
     if (this.getAuthResponseBSubVal()) {
-      this.setCookieAuth(this.getAuthResponseBSubVal())
+      this.setCookieAuth(this.getAuthResponseBSubVal());
       const jwt = this.getAuthResponseBSubVal().jwt;
       const expiredTime = jwt.tokenExpirationDate;
       const timeOut = expiredTime.valueOf() - Date.now() - 2000;
       this.refreshTokenTimeout = setTimeout(() => {
-        console.log("TIME OUT")
+        console.log('TIME OUT');
         /* giải quyết trường hợp cookie bị xoá hoặc bị hết hạn */
-        if(this.cookieService.check('a-t')){
+        if (this.cookieService.check('a-t')) {
           this.refreshToken().subscribe();
-        }else {
+        } else {
           /* Popup hết phiên làm việc */
-          this.notifyEndOfSession()
+          this.notifyEndOfSession();
         }
       }, timeOut);
     }
   }
-  notifyEndOfSession(){
+  notifyEndOfSession() {
     localStorage.removeItem('pendingOrders');
     localStorage.removeItem('summaryCart');
     localStorage.removeItem('__visited');
     this.store.dispatch(updateCart());
-    this.router.navigate(['/home'])
+    this.router.navigate(['/home']);
     this.dialog.open(AccessDeniedComponent, {
       data: 'endOfSession',
     });
   }
 
   setCookieAuth(authResponse: AuthenticationResponse) {
-    localStorage.setItem('__visited', JSON.stringify(true))
-    this.cookieService.set('a-t', authResponse.jwt.token, new Date(authResponse.jwt.tokenExpirationDate));
-    this.cookieService.set('uid', authResponse.user.id, new Date(authResponse.jwt.tokenExpirationDate));
+    localStorage.setItem('__visited', JSON.stringify(true));
+    this.cookieService.set(
+      'a-t',
+      authResponse.jwt.token,
+      new Date(authResponse.jwt.tokenExpirationDate)
+    );
+    this.cookieService.set(
+      'uid',
+      authResponse.user.id,
+      new Date(authResponse.jwt.tokenExpirationDate)
+    );
   }
   deleteCookieAuth() {
-    localStorage.removeItem('__visited')
+    localStorage.removeItem('__visited');
     this.cookieService.delete('a-t');
     this.cookieService.delete('uid');
   }
   refreshToken(): Observable<AuthenticationResponse> {
-    console.log("Refreshed Token")
+    console.log('Refreshed Token');
     return this.httpClient
-      .post<AuthenticationResponse>(`https://toy-store-be.herokuapp.com/api/refresh-token`, this.httpOptions)
+      .post<AuthenticationResponse>(
+        `${DOMAIN}/api/refresh-token`,
+        this.httpOptions
+      )
       .pipe(
         tap((response) => {
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
-          console.log(response)
+          console.log(response);
           return response;
         })
       );

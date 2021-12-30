@@ -22,6 +22,7 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { AdditionDialog } from 'src/app/product/product-list/product-list.component';
 import { addProductIntoOrder } from 'src/app/core/store/pending-order-items';
+import { DOMAIN } from 'src/app/_models/constant';
 @Injectable({
   providedIn: 'root',
 })
@@ -72,7 +73,7 @@ export class ProductService {
     pageIndex: number = this.initialPagination.pageIndex,
     limit: number = this.initialPagination.pageItems
   ): Observable<PaginationResult<Product>> {
-    let url = `https://toy-store-be.herokuapp.com/api/product-page`;
+    const url = `${DOMAIN}/api/product-page`;
     let httpParamOptions: HttpParamsOptions = {
       fromObject: {
         pageIndex: pageIndex,
@@ -107,7 +108,7 @@ export class ProductService {
     page: number = this.initialPagination.pageIndex,
     limit: number = this.initialPagination.pageItems
   ): Observable<PaginationResult<Product>> {
-    let url = 'https://toy-store-be.herokuapp.com/api/product-page/search';
+    let url = `${DOMAIN}/api/product-page/search`;
     let httpParamOptions = {
       fromObject: {
         searchValue: searchValue,
@@ -131,7 +132,7 @@ export class ProductService {
       );
   }
   findOne(productId: number): Observable<Product> {
-    const url = 'https://toy-store-be.herokuapp.com/api/product-detail';
+    const url = `${DOMAIN}/api/product-detail`;
     const httpParamOptions = {
       fromObject: {
         productId: productId,
