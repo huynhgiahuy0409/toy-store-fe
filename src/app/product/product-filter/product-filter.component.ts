@@ -4,10 +4,10 @@ import { Observable, combineLatest } from 'rxjs';
 import { BrandService, ProductService } from 'src/app/Services';
 import { AgeService } from 'src/app/Services/_age-service/age.service';
 import { UseObjectService } from 'src/app/Services/_use-object-service/use-object.service';
-import { Age, Brand, ProductFilter, UseObject} from 'src/app/_models';
-import { delay, startWith, tap } from 'rxjs/operators';
+import { Age, Brand, ProductFilter, UseObject } from 'src/app/_models';
+import { debounceTime, delay, startWith, switchMap, tap } from 'rxjs/operators';
 interface DefaultSltOption {
-  [key: number]: boolean
+  [key: string]: boolean;
 }
 
 @Component({
@@ -22,59 +22,77 @@ export class ProductFilterComponent implements OnInit {
   useObjects$!: Observable<UseObject[]>;
   ageSelectFG!: FormGroup;
   productFilter: ProductFilter = this.productService.initialFilter;
+  defaultAgeRangeSlt: DefaultSltOption = {};
   constructor(
     private productService: ProductService,
     private brandService: BrandService,
     private ageService: AgeService,
     private useObjectService: UseObjectService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.ageSelectFG = this.fb.group(this.defaultAgeRangeSlt);
+  }
 
   ngOnInit(): void {
-    let ageSltArr: number[];
-    let defaultAgeRangeSlt: DefaultSltOption = {};
+    let ageIdArr: number[];
     this.brands$ = this.brandService.findAll();
-    this.useObjects$ = this.useObjectService.findAll()
-    /* Setup age FormGroup */
+    this.useObjects$ = this.useObjectService.findAll();
     this.ages$ = this.ageService.findAll().pipe(
       tap((ages) => {
-        ageSltArr = ages.map((age) => age.id);
+        ageIdArr = ages.map((age) => age.id);
         const ageSltStatusMap = new Map(ages.map((age) => [age.id, false]));
-        defaultAgeRangeSlt = (<any>Object).fromEntries(ageSltStatusMap);
-        this.ageSelectFG = this.fb.group(defaultAgeRangeSlt);
+        this.defaultAgeRangeSlt = (<any>Object).fromEntries(ageSltStatusMap);
       })
     );
-
     /* Next a new value if FG has a change */
-    setTimeout(() => {
-      this.ageSelectFG.valueChanges.subscribe((rs) => {
-        const sltAge = ageSltArr.filter((ageId) => rs[ageId + '']);
-        this.productFilter.ageRangeIds = sltAge;
-        this.productService.filterBSub.next(this.productFilter);
-      });
-    }, 1000);
+    combineLatest([
+      this.ages$,
+      this.ageSelectFG.valueChanges.pipe(startWith(this.defaultAgeRangeSlt)),
+    ]).pipe(
+      tap(([v1, v2]) => {
+        /* this.ageSelectFG = this.fb.group(this.defaultAgeRangeSlt); */
+        console.log(v1);
+        console.log(v2);
+      })
+    );
+    /* this.ageSelectFG.valueChanges
+      .pipe(
+        debounceTime(1000),
+        tap(
+          (rs) => {
+            console.log(rs);
+            const sltAge = ageIdArr.filter((ageId) => rs[ageId]);
+            this.productFilter.ageRangeIds = sltAge;
+            this.productService.filterProductBSub.next(this.productFilter);
+          },
+          switchMap(() =>
+            this.ageSelectFG.valueChanges.pipe(
+              startWith({ 1: true, 2: false, 3: false, 4: false })
+            )
+          )
+        )
+      )
+      .subscribe(); */
   }
   search() {
-    this.productService
-      .searchProductsByName(this.searchValue)
-      .subscribe();
+    this.productService.searchProductsByName(this.searchValue).subscribe();
   }
 
-  genderChange($event: any){
+  genderChange($event: any) {
     let genderId: number = $event.value;
     this.productFilter.useObjectId = genderId;
-    this.productService.filterBSub.next(this.productFilter);
+    this.productService.filterProductBSub.next(this.productFilter);
   }
-  brandChange($event: any){
+  brandChange($event: any) {
     let brandId: number = $event.value;
     this.productFilter.brandId = brandId;
-    this.productService.filterBSub.next(this.productFilter);
+    this.productService.filterProductBSub.next(this.productFilter);
   }
-  priceRangeChange($event: any){
+  priceRangeChange($event: any) {
     console.log($event);
     let valueChoose = $event.value;
     this.productFilter.priceRange = [0, valueChoose];
-    this.productService.filterBSub.next(this.productFilter);
+    this.productService.filterProductBSub.next(this.productFilter);
   }
   formatLabel(value: number) {
     if (value >= 1000) {

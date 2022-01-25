@@ -1,24 +1,37 @@
+import { UiService } from './../../ui/ui.service';
 import { CookieService } from 'ngx-cookie-service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Pagination, Product, PaginationResult, PendingOrderItem } from 'src/app/_models';
-import { concatMap, tap } from 'rxjs/operators';
+import {
+  Pagination,
+  Product,
+  PaginationResult,
+  PendingOrderItem,
+} from 'src/app/_models';
+import { concatMap, debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { addProductIntoOrder } from 'src/app/core/store/pending-order-items/index';
 import { ProductService } from 'src/app/Services';
 import { ShoppingCartService } from 'src/app/Services/_shopping-cart/shopping-cart.service';
 import { FavoriteProductService } from 'src/app/Services/_favorite-product-service/favorite-product.service';
 interface Order {
-  value: [string,string];
+  value: [string, string];
   viewValue: string;
 }
 
 @Component({
-  templateUrl: './addition-dialog.component.html'
+  templateUrl: './addition-dialog.component.html',
 })
-export class AdditionDialog{
-  constructor(private additionDialogRef: MatDialogRef<AdditionDialog>, @Inject(MAT_DIALOG_DATA) public data: string ){
+export class AdditionDialog {
+  constructor(
+    private additionDialogRef: MatDialogRef<AdditionDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: string
+  ) {
     setTimeout(() => {
       additionDialogRef.close();
     }, 1500);
@@ -41,23 +54,31 @@ export class ProductListComponent implements OnInit {
     { value: ['name', 'asc'], viewValue: 'Sắp xếp theo tên A-Z' },
     { value: ['name', 'desc'], viewValue: 'Sắp xếp theo tên Z-A' },
   ];
-  selected = 'option2';
   constructor(
     private productService: ProductService,
+    private uiService: UiService,
     private favProductService: FavoriteProductService,
     private cookieService: CookieService,
     private cartService: ShoppingCartService,
     private store: Store,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.productService.filter$
+    this.productService.filterProduct$
       .pipe(
-        concatMap((filter) => {
-          const {ageRangeIds , useObjectId,brandId,priceRange, orderBy: order} = filter
-          console.log(filter)
-          return this.productService.showProducts(
+        debounceTime(1000),
+        tap(() => this.uiService.spin$.next(true)),
+        delay(1000),
+        switchMap((filter) => {
+          const {
+            ageRangeIds,
+            useObjectId,
+            brandId,
+            priceRange,
+            orderBy: order,
+          } = filter;
+          return this.productService.getProducts(
             ageRangeIds,
             useObjectId,
             brandId,
@@ -66,22 +87,29 @@ export class ProductListComponent implements OnInit {
             this.page
           );
         }),
-        tap((products) => {
-          this.productService.pagingResultBSub.next(products);
+        tap((pagingResult) => {
+          this.uiService.spin$.next(false);
+          this.productService.pagingResultBSub.next(pagingResult);
           this.pagingResult$ = this.productService.pagingResult$;
           this.pagination$ = this.productService.pagination$;
         })
       )
-      .subscribe();
+      .subscribe(
+        (val) => {
+          console.log(val);
+        },
+        (err) => console.log('err'),
+        () => console.log('complete')
+      );
   }
   handlePageChange(event$: any) {
-    console.log(event$)
+    console.log(event$);
     let pageIndex = event$.pageIndex;
     let pageSize = event$.pageSize;
-    this.productService.filter$
+    this.productService.filterProduct$
       .pipe(
         concatMap((filter) => {
-          return this.productService.showProducts(
+          return this.productService.getProducts(
             filter.ageRangeIds,
             filter.useObjectId,
             filter.brandId,
@@ -99,15 +127,15 @@ export class ProductListComponent implements OnInit {
       .subscribe();
   }
   orderByChange($event: any) {
-    console.log($event)
-    let filter = this.productService.filterBSub.value;
+    console.log($event);
+    let filter = this.productService.filterProductBSub.value;
     filter.orderBy = $event.value;
-    this.productService.filterBSub.next(filter);
+    this.productService.filterProductBSub.next(filter);
   }
   addToCart(product: Product) {
-    this.productService.addToCart(product)
+    this.productService.addToCart(product);
   }
   addToWishList(productId: number) {
-    this.productService.addToWishList(productId)
+    this.productService.addToWishList(productId);
   }
 }

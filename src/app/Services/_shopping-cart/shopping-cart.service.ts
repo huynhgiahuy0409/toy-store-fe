@@ -57,7 +57,7 @@ export class ShoppingCartService {
     return null;
   }
   getShoppingCart(userId: number): Observable<PendingOrderItem[]> {
-    const url = `https://toy-store-be.herokuapp.com/api/cart?userId=${userId}`;
+    const url = `${DOMAIN}/api/cart?userId=${userId}`;
     return this.httpClient.get<PendingOrderItem[]>(url, this.httpOptions);
   }
   computeTotalPrice(pendingOrderItem: PendingOrderItem) {
@@ -70,7 +70,7 @@ export class ShoppingCartService {
     return totalPrice;
   }
   getCoupon(code: string): Observable<Coupon> {
-    let url = `https://toy-store-be.herokuapp.com/api/coupon?code=${code}`;
+    let url = `${DOMAIN}/api/coupon?code=${code}`;
     return this.httpClient.get<Coupon>(url, this.httpOptions);
   }
 }

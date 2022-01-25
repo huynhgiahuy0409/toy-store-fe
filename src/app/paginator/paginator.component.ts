@@ -1,20 +1,36 @@
-import { Component, Injectable, Input, NgModule, OnInit, EventEmitter, Output } from '@angular/core';
-import { MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  Component,
+  Injectable,
+  Input,
+  NgModule,
+  OnInit,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
 import { Subject } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import {
+  MatProgressSpinnerModule,
+  MatSpinner,
+} from '@angular/material/progress-spinner';
 
 @Injectable()
 export class MyCustomPaginator implements MatPaginatorIntl {
@@ -34,7 +50,7 @@ export class MyCustomPaginator implements MatPaginatorIntl {
   getRangeLabel(page: number, pageSize: number, length: number): string {
     if (length === 0) {
       return $localize`Trang 1 của 1 trang`;
-    }else{
+    } else {
       const amountPages = Math.ceil(length / pageSize);
       return $localize`Trang ${page + 1} của ${amountPages} trang`;
     }
@@ -57,8 +73,7 @@ export class PaginatorComponent implements OnInit {
   pageEvent = new EventEmitter();
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput
@@ -67,9 +82,9 @@ export class PaginatorComponent implements OnInit {
     }
   }
   handleChange($event: any) {
-    console.log($event)
+    console.log($event);
     this.pageEvent.emit($event);
- }
+  }
 }
 const materialModule = [
   MatPaginatorModule,
@@ -87,12 +102,11 @@ const materialModule = [
   MatFormFieldModule,
   MatInputModule,
   MatCardModule,
+  MatProgressSpinnerModule,
 ];
 @NgModule({
   imports: materialModule,
   exports: materialModule,
-  providers: [
-    {provide: MatPaginatorIntl, useClass: MyCustomPaginator}
-  ]
+  providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginator }],
 })
 export class MaterialModule {}

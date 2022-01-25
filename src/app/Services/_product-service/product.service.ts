@@ -15,7 +15,7 @@ import {
   Product,
   ProductFilter,
 } from 'src/app/_models';
-import { delay, tap } from 'rxjs/operators';
+import { debounceTime, delay, tap } from 'rxjs/operators';
 import { param } from 'jquery';
 import { FavoriteProductService } from '../_favorite-product-service/favorite-product.service';
 import { Store } from '@ngrx/store';
@@ -45,8 +45,9 @@ export class ProductService {
     null
   );
   pagingResult$ = this.pagingResultBSub.asObservable();
-  filterBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
-  filter$: Observable<ProductFilter> = this.filterBSub.pipe();
+  filterProductBSub = new BehaviorSubject<ProductFilter>(this.initialFilter);
+  filterProduct$: Observable<ProductFilter> =
+    this.filterProductBSub.asObservable();
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -55,15 +56,15 @@ export class ProductService {
     params: {},
   };
   constructor(
-    private httpClient: HttpClient,
     private favProductService: FavoriteProductService,
     private cookieService: CookieService,
     private cartService: ShoppingCartService,
+    private httpClient: HttpClient,
     private store: Store,
     private dialog: MatDialog
   ) {}
   /* HELPER */
-  showProducts(
+  getProducts(
     ageRangeIds: number[] | null,
     userObjectId: number | null,
     brandId: number | null,
@@ -98,7 +99,7 @@ export class ProductService {
           this.pagingBSub.next({
             totalLength: products.totalLength,
             pageIndex: pageIndex,
-            pageItems: this.initialPagination.pageItems,
+            pageItems: limit,
           });
         })
       );

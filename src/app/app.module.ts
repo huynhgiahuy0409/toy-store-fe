@@ -5,10 +5,10 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule} from '@angular/forms';
-import { CommonModule} from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
@@ -25,32 +25,51 @@ import { CoreModule } from './core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { LoginEffects } from './core/store/auth/login.effect';
 import { ShoppingCartComponent } from './shoping-cart/shopping-cart.component';
-import { CouponAuditDiaLog, SummaryBoxComponent } from './shoping-cart/summary-box/summary-box.component';
+import {
+  CouponAuditDiaLog,
+  SummaryBoxComponent,
+} from './shoping-cart/summary-box/summary-box.component';
 import { TitleBoxComponent } from './tittle-box/title-box.component';
-import { AddressEditDialogComponent, CardPaymentDialog, PaymentComponent, PaymentSuccessDialog } from './payment/payment.component';
+import {
+  AddressEditDialogComponent,
+  CardPaymentDialog,
+  PaymentComponent,
+  PaymentSuccessDialog,
+} from './payment/payment.component';
 import { AccessDeniedComponent, LoginComponent } from './login/login.component';
 import { appInitializer } from './_helper/app.initializer';
 import { JwtInterceptor } from './_helper/jwt.interceptor';
 import { ErrorInterceptor } from './_helper/error.interceptor';
 import { AuthService } from './Services/_auth-service/auth.service';
-import { MaterialModule, PaginatorComponent } from './paginator/paginator.component';
+import {
+  MaterialModule,
+  PaginatorComponent,
+} from './paginator/paginator.component';
 import { ProductComponent } from './product/product.component';
-import { AdditionDialog, ProductListComponent } from './product/product-list/product-list.component';
+import {
+  AdditionDialog,
+  ProductListComponent,
+} from './product/product-list/product-list.component';
 import { ProductFilterComponent } from './product/product-filter/product-filter.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import {PaymentLoginDialog} from './shoping-cart/summary-box/summary-box.component';
+import { PaymentLoginDialog } from './shoping-cart/summary-box/summary-box.component';
 import { AccountCustomerComponent } from './account-customer/account-customer.component';
-import { AccountComponent, UpdateContactDiagLog } from './account-customer/account/account.component';
+import {
+  AccountComponent,
+  UpdateContactDiagLog,
+} from './account-customer/account/account.component';
 import { PurchaseHistoryComponent } from './account-customer/purchase-history/purchase-history.component';
 import { FavoritesComponent } from './account-customer/favorites/favorites.component';
 import { DeliveryAddressComponent } from './account-customer/delivery-address/delivery-address.component';
 import { RouterModule } from '@angular/router';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import {
+  MatProgressSpinnerModule,
+  MatSpinner,
+} from '@angular/material/progress-spinner';
 
-
-
-
-
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +100,7 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     PaymentSuccessDialog,
     UpdateContactDiagLog,
     CouponAuditDiaLog,
-    ProductDetailComponent
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +123,9 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     MaterialModule,
     MatDialogModule,
     RouterModule,
+    MatProgressSpinnerModule,
+    OverlayModule,
+    PortalModule,
   ],
   providers: [
     {
@@ -115,8 +137,9 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     CookieService,
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent],
+  entryComponents: [MatSpinner],
 })
 export class AppModule {}
