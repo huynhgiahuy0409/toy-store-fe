@@ -1,7 +1,19 @@
 import { ShoppingCartService } from 'src/app/Services/_shopping-cart/shopping-cart.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthenticationRequest} from './../_models/';
-import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors, FormBuilder, ValidatorFn } from '@angular/forms';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { AuthenticationRequest } from './../_models/';
+import {
+  FormGroup,
+  Validators,
+  FormControl,
+  AbstractControl,
+  ValidationErrors,
+  FormBuilder,
+  ValidatorFn,
+} from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '../Services/_auth-service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,10 +27,13 @@ export function forbiddenUsername(c: AbstractControl): ValidationErrors | null {
   templateUrl: './access-denied.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class AccessDeniedComponent{
-  data!: string
-  constructor(public matDialogRef: MatDialogRef<AccessDeniedComponent>, @Inject(MAT_DIALOG_DATA) data: string){
-      this.data = data
+export class AccessDeniedComponent {
+  data!: string;
+  constructor(
+    public matDialogRef: MatDialogRef<AccessDeniedComponent>,
+    @Inject(MAT_DIALOG_DATA) data: string
+  ) {
+    this.data = data;
   }
 }
 
@@ -44,7 +59,7 @@ export class LoginComponent implements OnInit {
       if (activatedRoute.snapshot.queryParams.accessDenied === 'true') {
         this.dialog.open(AccessDeniedComponent, {
           width: '400px',
-          data: "deniedAccess"
+          data: 'deniedAccess',
         });
       }
     }
@@ -73,7 +88,6 @@ export class LoginComponent implements OnInit {
       this.authService
         .createAuthenticationToken(authenticationRequest)
         .subscribe((authenticationResponse) => {
-          console.log(authenticationResponse)
           if (authenticationResponse) {
             if (this.routeConfig === 'login/payment') {
               this.router.navigate(['/shopping-cart']);

@@ -37,7 +37,7 @@ export class ShoppingCartService {
   ): Observable<any> | null {
     const userId = this.cookieService.get('uid');
     if (userId) {
-      const url = `${DOMAIN}api/cart/update?userId=${userId}&action=${action}`;
+      const url = `${DOMAIN}/api/cart/update?userId=${userId}&action=${action}`;
       return this.httpClient.post<any>(url, pendingOrderItem, this.httpOptions);
     }
     return null;
@@ -58,6 +58,7 @@ export class ShoppingCartService {
   }
   getShoppingCart(userId: number): Observable<PendingOrderItem[]> {
     const url = `${DOMAIN}/api/cart?userId=${userId}`;
+    console.log(url);
     return this.httpClient.get<PendingOrderItem[]>(url, this.httpOptions);
   }
   computeTotalPrice(pendingOrderItem: PendingOrderItem) {

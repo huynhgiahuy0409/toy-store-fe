@@ -53,7 +53,7 @@ export class FavoriteProductService {
       };
     }
     this.httpOptions.params = new HttpParams(this.httpParamOptions);
-    let url = `https://toy-store-be.herokuapp.com/api/favorite-product`;
+    let url = `${DOMAIN}/api/favorite-product`;
     return this.httpClient.get<PaginationResult<FavoriteProduct>>(
       url,
       this.httpOptions

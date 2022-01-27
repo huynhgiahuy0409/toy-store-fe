@@ -70,18 +70,16 @@ export class AuthService implements OnInit {
       )
       .pipe(
         tap((response) => {
-          console.log('okkkkkkkk');
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
-          console.log(response);
           /* login is completed */
-          if (response instanceof AuthenticatorAssertionResponse) {
+          if (response?.jwt) {
             /* merge cart when login */
             if (localStorage['pendingOrders']) {
               let pendingOrderItems: PendingOrderItem[] = JSON.parse(
                 localStorage['pendingOrders']
               );
-              if (pendingOrderItems.length != 0) {
+              if (pendingOrderItems) {
                 this.shoppingCartService
                   .mergeCart(pendingOrderItems)
                   ?.pipe(
@@ -180,7 +178,34 @@ export class AuthService implements OnInit {
         tap((response) => {
           this.authResponseBSub.next(response);
           this.startRefreshTokenTimer();
-          console.log(response);
+          if (response?.jwt) {
+            /* merge cart when login */
+            if (localStorage['pendingOrders']) {
+              let pendingOrderItems: PendingOrderItem[] = JSON.parse(
+                localStorage['pendingOrders']
+              );
+              if (pendingOrderItems) {
+                this.shoppingCartService
+                  .mergeCart(pendingOrderItems)
+                  ?.pipe(
+                    tap((pendingOrderItems) => {
+                      localStorage['pendingOrders'] =
+                        JSON.stringify(pendingOrderItems);
+                      this.store.dispatch(updatePendingOrderItems());
+                    })
+                  )
+                  .subscribe();
+              }
+            }
+            /* set auth cookie */
+            if (
+              this.cookieService.check('a-t') &&
+              this.cookieService.check('e-t') &&
+              this.cookieService.check('uid')
+            ) {
+              this.setCookieAuth(response);
+            }
+          }
           return response;
         })
       );
